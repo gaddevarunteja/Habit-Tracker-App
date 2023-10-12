@@ -5,10 +5,9 @@ const habitSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    }, dates: [{
-        date: String,
-        isDone: String
-    }], favorite: {
+    }, dates: [],
+        isDone: []
+    , favorite: {
         type: Boolean,
         default: false
     }

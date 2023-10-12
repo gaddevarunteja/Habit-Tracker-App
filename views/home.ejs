@@ -1,16 +1,42 @@
 <link rel="stylesheet" href="/css/home.css">
-<div id="myDiv">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/74894dafb2.js" crossorigin="anonymous"></script><div id="myDiv">
+<div id="myDiv">   
     <form method="post" action="/habits/create">
         <input type="text" name="habit" placeholder="Add new habit" required/>
         <button> Add Habits </button>
     </form>
 
-    <% for(habit of habits) { %>
+    <% for(let habit of habits) { %>
         <%= habit.habit %>
-        <% for(day of habit.dates) { %> 
-            <%= day.date %>
-            <%= day.isDone %>
-        <% } %>
-        <br/>
+        <div style="display: flex; justify-content: space-evenly;">
+            <% for(let d of weeklyDate) { %>
+                <%
+                    let find;
+                    let stat;
+                    habit.dates.map((item, index) => {
+                        if(item === d)
+                        {
+                            find = true;
+                            stat = habit.isDone[index];
+                        }
+                    });
+                %>
+                <div>
+                    <p><%= d %></p>
+                    <a href="/habits/status-update/?id=<%= habit._id %>&date=<%= d %>">
+                        <% if(stat==='yes'){ %>
+                            <i class="fas fa-check-circle"></i>
+                        <% } else if(stat==='no'){ %>
+                            <i class="fas fa-times-circle"></i>
+                        <% } else { %>
+                            <i class="fas fa-minus-circle"></i>
+                        <% } %>
+                    </a>
+                </div>
+            <% } %>     
+        </div>
     <% } %>
 </div>
