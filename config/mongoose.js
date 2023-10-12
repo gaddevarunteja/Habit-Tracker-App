@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/habit-tracker');
+mongoose.connect(process.env.MONGODB_URI);
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console,'Error in connecting to db'));
