@@ -10,8 +10,20 @@
     </form>
 
     <% for(let habit of habits) { %>
-        <%= habit.habit %>
-        <div style="display: flex; justify-content: space-evenly;">
+        <div class="habit-details">
+            <%= habit.habit %>
+            <a href="/habits/favorite-habit/?id=<%= habit._id %>" >
+                <% if(habit.favorite) { %>
+                    <i class="fa-solid fa-star"></i>
+                    <% } else { %>
+                    <i class="fa-regular fa-star"></i>
+                <% } %>
+            </a>
+            <a href="/habits/remove/?id=<%= habit._id %>">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </div>
+        <div class="daily-updates">
             <% for(let d of weeklyDate) { %>
                 <%
                     let find;

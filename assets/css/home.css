@@ -1,3 +1,19 @@
+body {
+    margin: auto;
+}
+
 #myDiv {
     text-align: center;
+}
+
+.habit-details {
+    background-color: aqua;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.daily-updates {
+    display: flex; 
+    justify-content: space-evenly;
+    background-color: lightgreen;
 }

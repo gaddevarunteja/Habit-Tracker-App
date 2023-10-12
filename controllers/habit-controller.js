@@ -4,7 +4,7 @@ async function getOneWeekDate() {
     let week = [];
     for (let i = 0; i < 7; i++) {
         const d = new Date();
-        d.setDate(d.getDate() + i);
+        d.setDate(d.getDate() - i);
         let mm = d.getMonth() + 1;
         if (mm < 10) mm = '0' + mm;
         let dd = d.getDate();
@@ -31,11 +31,18 @@ module.exports.createHabit = async (req, res) => {
 };
 
 module.exports.favoriteHabit = async (req, res) => {
-
+    let habit_id = req.query.id;
+    let habit = await Habit.findById(habit_id);
+    habit.favorite = habit.favorite ? false : true;
+    await habit.save();
+    return res.redirect('back');
 };
 
 module.exports.destroyHabit = async (req, res) => {
-
+    let habit_id = req.query.id;
+    let habit = await Habit.findById(habit_id);
+    await habit.deleteOne({habit: habit_id});
+    return res.redirect('back');
 };
 
 module.exports.statusUpdate = async (req, res) => {
@@ -57,10 +64,7 @@ module.exports.statusUpdate = async (req, res) => {
             }
             found = true;
         }
-    })
-    if (!found) {
-        dates.push({ date: d, isDone: 'yes' });
-    }
+    });
     await habit.save();
     return res.redirect('back');  
 };
