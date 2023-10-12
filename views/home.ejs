@@ -1,0 +1,13 @@
+<form method="post" action="/habits/create">
+    <input type="text" name="habit" placeholder="Add new habit" required/>
+    <button> Add Habits </button>
+</form>
+
+<% for(habit of habits) { %>
+    <%= habit.habit %>
+    <% for(day of habit.dates) { %> 
+        <%= day.date %>
+        <%= day.isDone %>
+    <% } %>
+    <br/>
+<% } %>
