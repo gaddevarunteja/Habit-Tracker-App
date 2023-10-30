@@ -16,10 +16,15 @@ function getOneWeekDate() {
 }
 
 module.exports.index = async (req, res) => { 
-    let habits = await Habit.find({});
-    return res.render('home', {
-        title: "Home",
-        habits: habits,
-        weeklyDate: await getOneWeekDate()
-    });
+    try {
+        let habits = await Habit.find({});
+        return res.render('home', {
+            title: "Home",
+            habits: habits,
+            weeklyDate: await getOneWeekDate()
+        });
+    } catch(err) {
+        console.log(`Error: ${err}`);
+        return;
+    }
 };
