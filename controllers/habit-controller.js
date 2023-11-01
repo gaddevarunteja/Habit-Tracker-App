@@ -26,7 +26,7 @@ module.exports.createHabit = async (req, res) => {
             return res.redirect('back'); 
         }
         let habit = await Habit.create({habit: req.body.habit, 
-                dates: await getOneWeekDate(), isDone: Array(7).fill("none")});
+                dates: await getOneWeekDate(), isDone: new Array(7).fill("none")});
         await habit.save();
         return res.redirect('back');
     } catch(err) {
@@ -67,7 +67,13 @@ module.exports.statusUpdate = async (req, res) => {
         let d = req.query.date;
         let habit = await Habit.findById(habit_id);
         let dates = await getOneWeekDate();
-        let found = false;
+        let date = habit.dates[6], idx = 6;
+        for(let i = 6; i >= 0; i--) {
+            if(dates[i] <= date) {
+                habit.isDone[i] = habit.isDone[idx--];
+            } 
+        }
+        habit.dates = dates;
         dates.map((item, index) => {
             if (item == d) {
                 if (habit.isDone[index] === 'yes') {
@@ -79,7 +85,6 @@ module.exports.statusUpdate = async (req, res) => {
                 else if (habit.isDone[index] === 'none') {
                     habit.isDone[index] = 'yes';
                 }
-                found = true;
             }
         });
         await habit.save();
